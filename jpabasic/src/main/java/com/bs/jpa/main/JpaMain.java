@@ -1,0 +1,40 @@
+package com.bs.jpa.main;
+
+import com.bs.jpa.common.JPATemplate;
+import com.bs.jpa.controller.AssociationController;
+import com.bs.jpa.controller.BasicController;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+
+public class JpaMain {
+	public static void main(String[] args) {
+		EntityManagerFactory factory = JPATemplate.getEntityManagerFactory();
+		// 영속성 컨텍스트를 관리하는 EntityManager 클래스 생성
+		EntityManager em = factory.createEntityManager();
+		// 트랜젝션을 관리하는 EntityTransaction 클래스 생성
+		EntityTransaction et = em.getTransaction();
+		
+		BasicController bc = new BasicController();
+		
+//		bc.basicEntityUse(em);
+//		bc.basicTest2(em);
+//		bc.basicTest3(em);
+		
+//		bc.insertTest(em);
+//		bc.updateTest(em, (long) 10);
+//		bc.deleteTest(em, (long) 10);
+//		bc.selectTest(em);
+		
+		AssociationController ac = new AssociationController();
+		
+//		ac.oneToManyTest(em);
+//		ac.oneToManyTest2(em);
+		
+//		ac.insertTest(em);
+//		ac.removeStudent(em, 1L);
+//		ac.removeLesson(em, 2L);
+		ac.searchData(em);
+	}
+}
