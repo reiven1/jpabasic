@@ -33,8 +33,9 @@ import lombok.NoArgsConstructor;
 @Entity(name = "member_entity")
 // 테이블에 관련된 내용을 설정
 @Table(name = "MEMBERENTITY_HSW", uniqueConstraints = {
-		@UniqueConstraint(name = "unique", columnNames = { "MEMBER_ID", "MEMBER_PHONE" }) }, indexes = {
-				@Index(name = "idx_memberid_membername", columnList = "MEMBER_ID, memberName") })
+		@UniqueConstraint(name = "unique", columnNames = { "MEMBER_ID", "MEMBER_PHONE" }) }/*, indexes = {
+				@Index(name = "idx_memberid_membername", columnList = "MEMBER_ID, memberName") }*/
+)
 // 시퀀스 객체 만들기
 @SequenceGenerator(name = "seqMemberNo", sequenceName = "seq_member_no", initialValue = 1, allocationSize = 1)
 public class MemberEntity {

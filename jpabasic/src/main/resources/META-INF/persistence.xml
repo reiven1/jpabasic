@@ -11,9 +11,9 @@
 			<property name="jakarta.persistence.jdbc.url"
 				value="jdbc:oracle:thin:@" />
 			<property name="jakarta.persistence.jdbc.user"
-				value="" />
+				value="scott" />
 			<property name="jakarta.persistence.jdbc.password"
-				value="" />
+				value="tiger" />
 				
 			<!-- 방언 설정 벤더 회사별로 HIBERNATE에서 객체로 제공 -->
 			<property name="hibernate.dialect"
@@ -27,6 +27,26 @@
 			<!-- DDL 구문 실행 여부 설정 -->
 			<!-- create, create-drop, update, validate, none -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="webdb">
+		<properties>
+			<property name="jakarta.persistence.jdbc.driver"
+				value="oracle.jdbc.driver.OracleDriver" />
+			<property name="jakarta.persistence.jdbc.url"
+				value="jdbc:oracle:thin:@" />
+			<property name="jakarta.persistence.jdbc.user"
+				value="web" />
+			<property name="jakarta.persistence.jdbc.password"
+				value="web" />
+				
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.OracleDialect" />
+				
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 		</properties>
 	</persistence-unit>
 </persistence>

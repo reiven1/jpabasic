@@ -1,5 +1,15 @@
 package com.bs.jpa.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import com.bs.jpa.common.Gender;
+import com.bs.jpa.model.entity.compose.ChoiseLesson;
+import com.bs.jpa.model.entity.compose.LessonEntity2;
+import com.bs.jpa.model.entity.compose.StudentEntity2;
+import com.bs.jpa.model.entity.manytomany.CartEntity;
+import com.bs.jpa.model.entity.manytomany.CustomerEntity;
+import com.bs.jpa.model.entity.manytomany.ProductEntity;
 import com.bs.jpa.model.entity.onetomany.DepartmentEntity;
 import com.bs.jpa.model.entity.onetomany.EmployeeEntity;
 import com.bs.jpa.model.entity.onetomany.LessonEntity;
@@ -136,6 +146,104 @@ public class AssociationController {
 //		System.out.println(s.getLesson());
 		
 		LessonEntity l = em.find(LessonEntity.class, 3L);
+		
+	}
+	
+	public void manyToManyTest(EntityManager em) {
+		em.getTransaction().begin();
+		ProductEntity p = ProductEntity.builder()
+				.productName("램")
+				.price(200000)
+				.discount(0.2)
+				.build();
+		ProductEntity p2 = ProductEntity.builder()
+				.productName("그래픽카드")
+				.price(2000000)
+				.discount(0.1)
+				.build();
+		em.persist(p);
+		em.persist(p2);
+		
+		CustomerEntity c = CustomerEntity.builder()
+				.customerName("오수환")
+				.gender(Gender.M)
+				.age(25)
+				.address("울산광역시")
+				.build();
+		CustomerEntity c1 = CustomerEntity.builder()
+				.customerName("김영호")
+				.age(25)
+				.gender(Gender.M)
+				.address("경북 구미")
+				.build();
+		CustomerEntity c2 = CustomerEntity.builder()
+				.customerName("강원준")
+				.age(25)
+				.gender(Gender.M)
+				.address("경남 사천")
+				.build();
+		
+//		p.setCustomers(List.of(c,c1,c2));
+//		p2.setCustomers(List.of(c1));
+		
+		em.getTransaction().commit();
+	}
+
+	public void manyToManySearch(EntityManager em) {
+		ProductEntity p =em.find(ProductEntity.class, 10L);
+//		CustomerEntity c = p.getCustomers().get(0);
+		System.out.println(p);
+	}
+	
+	public void manyToManyTest2(EntityManager em) {
+		em.getTransaction().begin();
+		
+		ProductEntity p = em.find(ProductEntity.class, 9L);
+		ProductEntity p2 = em.find(ProductEntity.class, 10L);
+		
+		CustomerEntity c = em.find(CustomerEntity.class, 1L);
+		CustomerEntity c2 = em.find(CustomerEntity.class, 2L);
+		CustomerEntity c3 = em.find(CustomerEntity.class, 3L);
+		
+		CartEntity cart = CartEntity.builder()
+				.proCount(3)
+				.product(p)
+				.customer(c)
+				.proDate(LocalDate.now())
+				.build();
+		
+		em.persist(cart);
+		
+		c.getProducts().add(cart);
+		p.getCustomers().add(cart);
+		
+		em.getTransaction().commit();
+	}
+	public void studentlesson(EntityManager em) {
+		em.getTransaction().begin();
+		StudentEntity2 std = StudentEntity2.builder()
+				.stdName("하승우")
+				.stdClass(1)
+				.stdGrade(1)
+				.stdNum(1)
+				.build();
+		LessonEntity2 lesson = LessonEntity2.builder()
+				.lessonName("자바")
+				.lessonCost(100)
+				.build();
+		ChoiseLesson cl = ChoiseLesson.builder()
+				.year("2026")
+				.term("1학기")
+				.build();
+		std.getLessons().add(cl);
+		lesson.getStudent().add(cl);
+
+		
+		em.persist(std);
+		em.persist(lesson);
+		em.persist(cl);
+		
+		em.getTransaction().commit();
 		
 	}
 }
